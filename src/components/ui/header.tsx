@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "./button";
 import { Card } from "./card";
 import {
@@ -9,8 +11,13 @@ import {
   ShoppingCartIcon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
+import { signIn } from "next-auth/react";
 
 const Header = () => {
+  const handleLoginClick = () => {
+    signIn();
+  }
+
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
       <Sheet>
@@ -24,7 +31,7 @@ const Header = () => {
             Menu
           </SheetHeader>
           <div className="mt-2 flex flex-col gap-y-2">
-            <Button variant="outline" className="w-full justify-start gap-x-4">
+            <Button variant="outline" className="w-full justify-start gap-x-4" onClick={handleLoginClick}>
               <LogInIcon size={16} />
               Sign In
             </Button>
