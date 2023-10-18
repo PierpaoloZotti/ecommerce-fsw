@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "./button";
 import { Card } from "./card";
@@ -18,15 +18,15 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const Header = () => {
-  const {data, status} = useSession()
-  
-  const handleLoginClick =async () => {
-    await signIn();
-  }
+  const { data, status } = useSession();
 
-  const handleLogoutClick =async () => {
+  const handleLoginClick = async () => {
+    await signIn();
+  };
+
+  const handleLogoutClick = async () => {
     await signOut();
-  }
+  };
 
   return (
     <Card className="flex items-center justify-between p-[1.875rem]">
@@ -40,28 +40,41 @@ const Header = () => {
           <SheetHeader className="text-left text-lg font-semibold">
             Menu
           </SheetHeader>
-          {status === 'authenticated' && data?.user?.image &&
-          
-          (
-            <Avatar>
-              <AvatarFallback>
-                {data.user.name?.[0].toUpperCase()}
-              </AvatarFallback>
-              <AvatarImage src={data.user.image} />
-            </Avatar>
+          {status === "authenticated" && data?.user?.image && (
+            <div className="flex items-center gap-x-2">
+              <Avatar>
+                <AvatarImage src={data.user.image} />
+                <AvatarFallback>
+                  {data.user.name?.[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              <span className="text-md font-semibold text-primary">
+                {data.user.name}
+              </span>
+            </div>
           )}
           <div className="flex items-center gap-2"></div>
           <div className="mt-2 flex flex-col gap-y-2">
-           {status === 'unauthenticated' &&
-            <Button variant="outline" className="w-full justify-start gap-x-4" onClick={handleLoginClick}>
-            <LogInIcon size={16} />
-            Sign In
-          </Button>}
-          {status === 'authenticated' &&
-           <Button variant="outline" className="w-full justify-start gap-x-4" onClick={handleLogoutClick}>
-           <LogOutIcon size={16} />
-           Log Out
-         </Button>}
+            {status === "unauthenticated" && (
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-x-4"
+                onClick={handleLoginClick}
+              >
+                <LogInIcon size={16} />
+                Sign In
+              </Button>
+            )}
+            {status === "authenticated" && (
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-x-4"
+                onClick={handleLogoutClick}
+              >
+                <LogOutIcon size={16} />
+                Log Out
+              </Button>
+            )}
             <Button variant="outline" className="w-full justify-start gap-x-4">
               <HomeIcon size={16} />
               Home
@@ -80,21 +93,10 @@ const Header = () => {
       <h1 className="text-lg font-semibold">
         <span className="text-primary">FSW</span> Store
       </h1>
-     
-      {data ? ( 
-      <div className="flex items-center gap-4">
-        <Button size="icon" variant="outline">
-         <ShoppingCartIcon />
-       </Button>
-        <div className="relative w-8 h-8 rounded-full overflow-hidden">
-          <Image src={data.user?.image || ''} fill alt="user profile pic" objectFit="cover"/>
-          
-        </div>
-        </div>)
-        :
-        ( <Button size="icon" variant="outline">
+
+      <Button size="icon" variant="outline">
         <ShoppingCartIcon />
-      </Button>)}
+      </Button>
     </Card>
   );
 };
