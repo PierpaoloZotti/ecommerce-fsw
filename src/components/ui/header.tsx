@@ -6,16 +6,26 @@ import {
   HomeIcon,
   ListOrderedIcon,
   LogInIcon,
+  LogOutIcon,
   MenuIcon,
   PercentCircleIcon,
   ShoppingCartIcon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const Header = () => {
-  const handleLoginClick = () => {
-    signIn();
+  const {data, status} = useSession()
+  
+  const handleLoginClick =async () => {
+    await signIn();
+  }
+
+  const handleLogoutClick =async () => {
+    await signOut();
   }
 
   return (
@@ -30,11 +40,28 @@ const Header = () => {
           <SheetHeader className="text-left text-lg font-semibold">
             Menu
           </SheetHeader>
+          {status === 'authenticated' && data?.user?.image &&
+          
+          (
+            <Avatar>
+              <AvatarFallback>
+                {data.user.name?.[0].toUpperCase()}
+              </AvatarFallback>
+              <AvatarImage src={data.user.image} />
+            </Avatar>
+          )}
+          <div className="flex items-center gap-2"></div>
           <div className="mt-2 flex flex-col gap-y-2">
+           {status === 'unauthenticated' &&
             <Button variant="outline" className="w-full justify-start gap-x-4" onClick={handleLoginClick}>
-              <LogInIcon size={16} />
-              Sign In
-            </Button>
+            <LogInIcon size={16} />
+            Sign In
+          </Button>}
+          {status === 'authenticated' &&
+           <Button variant="outline" className="w-full justify-start gap-x-4" onClick={handleLogoutClick}>
+           <LogOutIcon size={16} />
+           Log Out
+         </Button>}
             <Button variant="outline" className="w-full justify-start gap-x-4">
               <HomeIcon size={16} />
               Home
@@ -53,9 +80,21 @@ const Header = () => {
       <h1 className="text-lg font-semibold">
         <span className="text-primary">FSW</span> Store
       </h1>
-      <Button size="icon" variant="outline">
+     
+      {data ? ( 
+      <div className="flex items-center gap-4">
+        <Button size="icon" variant="outline">
+         <ShoppingCartIcon />
+       </Button>
+        <div className="relative w-8 h-8 rounded-full overflow-hidden">
+          <Image src={data.user?.image || ''} fill alt="user profile pic" objectFit="cover"/>
+          
+        </div>
+        </div>)
+        :
+        ( <Button size="icon" variant="outline">
         <ShoppingCartIcon />
-      </Button>
+      </Button>)}
     </Card>
   );
 };
