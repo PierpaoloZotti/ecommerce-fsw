@@ -16,6 +16,7 @@ import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Separator } from "./separator";
 
 const Header = () => {
   const { data, status } = useSession();
@@ -40,6 +41,7 @@ const Header = () => {
           <SheetHeader className="text-left text-lg font-semibold">
             Menu
           </SheetHeader>
+          <Separator className="my-4" />
           {status === "authenticated" && data?.user?.image && (
             <div className="flex items-center gap-x-2">
               <Avatar>
@@ -53,6 +55,7 @@ const Header = () => {
               </span>
             </div>
           )}
+          <Separator className="my-4" />
           <div className="flex items-center gap-2"></div>
           <div className="mt-2 flex flex-col gap-y-2">
             {status === "unauthenticated" && (
