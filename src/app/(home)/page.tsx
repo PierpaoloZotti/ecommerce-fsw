@@ -30,17 +30,17 @@ export default async function Home() {
 
   return (
     <>
-      <Banner src="/bannerHome01.png" />
+      <Banner src="/bannerHome01.png" alt="banner1" />
 
       <div className="mt-8 px-5">
         <Categories />
       </div>
       <TitleHeader title="DEALS" />
       <ProductList products={deals} />
-      <Banner src="/bannerHome02.png" />
+      <Banner src="/bannerHome02.png" alt="banner2" />
       <TitleHeader title="KEYBOARDS" />
       <ProductList products={keyboards} />
-      <Banner src="/bannerHome03.png" />
+      <Banner src="/bannerHome03.png" alt="banner3" />
       <TitleHeader title="MOUSES" />
       <ProductList products={mouses} />
     </>
