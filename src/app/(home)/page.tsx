@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Categories from "./components/categories";
 import ProductList from "./components/product-list";
 import { db } from "@/lib/prisma";
