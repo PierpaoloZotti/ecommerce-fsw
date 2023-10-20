@@ -1,18 +1,16 @@
-import Image from "next/image";
+import { cn } from "@/lib/utils";
+import Image, { ImageProps } from "next/image";
 
-type BannerProps = {
-  src: string;
-};
-
-const Banner = ({ src }: BannerProps) => {
+const Banner = ({ src, alt, className, ...props }: ImageProps) => {
   return (
     <Image
       src={src}
-      alt={src}
+      alt={alt}
       width={0}
       height={0}
-      className="my-7 h-auto w-full overflow-hidden rounded-2xl px-5"
+      className={cn(`my-7 h-auto w-full px-5`, className)}
       sizes="100dvh"
+      {...props}
     />
   );
 };
