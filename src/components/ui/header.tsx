@@ -14,11 +14,14 @@ import {
 import { Sheet, SheetContent, SheetHeader, SheetTrigger } from "./sheet";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Separator } from "./separator";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Header = () => {
+  const router = useRouter();
+
   const { data, status } = useSession();
 
   const handleLoginClick = async () => {
@@ -86,10 +89,15 @@ const Header = () => {
               <PercentCircleIcon size={16} />
               Promotions
             </Button>
-            <Button variant="outline" className="w-full justify-start gap-x-4">
-              <ListOrderedIcon size={16} />
-              Catalog
-            </Button>
+            <Link href="/catalog">
+              <Button
+                variant="outline"
+                className="w-full justify-start gap-x-4"
+              >
+                <ListOrderedIcon size={16} />
+                Catalog
+              </Button>
+            </Link>
           </div>
         </SheetContent>
       </Sheet>
