@@ -25,9 +25,11 @@ const ProductShowcase = ({ product }: ProductShowcaseProps) => {
       <div className="-mt-8 rounded-t-xl bg-background">
         <div className="flex items-center justify-between rounded-xl bg-background px-5 py-8">
           {product.imageUrls.map((image) => (
-            <div
+            <button
               key={image}
-              className="relative flex h-[77px] w-[77px] cursor-pointer items-center justify-center rounded-xl bg-accent"
+              className={`relative flex h-[77px] w-[77px] cursor-pointer items-center justify-center rounded-xl bg-accent ${
+                image === mainImage && "ring-2 ring-primary"
+              }`}
               onClick={() => setMainImage(image)}
             >
               <Image
@@ -38,7 +40,7 @@ const ProductShowcase = ({ product }: ProductShowcaseProps) => {
                 sizes="100dvh"
                 className="h-auto w-3/4 object-contain"
               />
-            </div>
+            </button>
           ))}
         </div>
       </div>

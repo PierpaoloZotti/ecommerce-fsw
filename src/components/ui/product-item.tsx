@@ -1,18 +1,14 @@
-import { computeProductTotalPrice } from "@/helper/product";
-import { Product } from "@prisma/client";
+import { ProductWithTotalPrice } from "@/helper/product";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 type ProductItemProps = {
-  product: Product;
+  product: ProductWithTotalPrice;
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const discountedPrice = computeProductTotalPrice(
-    product.basePrice.toNumber(),
-    product.discountPercentage,
-  ).toFixed(2);
+  console.log(product);
   return (
     <Link href={`/product/${product.slug}`} className="cursor-pointer">
       <div className="flex max-w-[156px] flex-col gap-4">
@@ -22,7 +18,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
             alt={product.name}
             width={0}
             height={0}
-            sizes="100dvh"
+            sizes="100dvw"
             objectFit="content"
             className="m-auto h-auto max-h-[60%] w-auto"
           />
@@ -42,8 +38,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <div>
             {product.discountPercentage > 0 ? (
               <div className="flex items-baseline gap-x-1 font-semibold">
-                <h2>R$</h2>
-                <h2>{discountedPrice}</h2>
+                <h2>R$ {product.totalPrice}</h2>
+
                 <span className="ml-1 text-xs font-light text-secondary-foreground/50 line-through">
                   {product.basePrice.toFixed(2)}
                 </span>
@@ -51,7 +47,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
             ) : (
               <div className="flex items-baseline gap-x-1 font-semibold">
                 <h2>R$</h2>
-                <h2>{product.basePrice.toFixed(2)}</h2>
+                <h2>{product.totalPrice}</h2>
               </div>
             )}
           </div>
