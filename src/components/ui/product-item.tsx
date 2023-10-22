@@ -8,7 +8,6 @@ type ProductItemProps = {
 };
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  console.log(product);
   return (
     <Link href={`/product/${product.slug}`} className="cursor-pointer">
       <div className="flex max-w-[156px] flex-col gap-4">

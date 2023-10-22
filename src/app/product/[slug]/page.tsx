@@ -2,9 +2,6 @@ import { db } from "@/lib/prisma";
 import ProductShowcase from "./component/product-showcase";
 import TitleHeader from "@/components/ui/title-header";
 import ProductList from "@/app/(home)/components/product-list";
-import { computeProductTotalPrice } from "@/helper/product";
-import { ArrowDown } from "lucide-react";
-import Counter from "./component/counter";
 
 type ProductPageProps = {
   params: {
