@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import { Category } from "@prisma/client";
 import {
   HeadphonesIcon,
@@ -11,9 +12,10 @@ import {
 
 type CategoryItemProps = {
   category: Category;
+  className?: string;
 };
 
-const CategoryItem = ({ category }: CategoryItemProps) => {
+const CategoryItem = ({ category, className }: CategoryItemProps) => {
   const categoryIcon = {
     keyboards: <KeyboardIcon className="h-4 w-4" />,
     monitors: <MonitorIcon className="h-4 w-4" />,
@@ -25,7 +27,10 @@ const CategoryItem = ({ category }: CategoryItemProps) => {
   return (
     <Badge
       variant="outline"
-      className="flex items-center justify-center gap-4 rounded-[10px] py-3"
+      className={cn(
+        `flex items-center justify-center gap-4 rounded-[10px] py-3`,
+        className,
+      )}
     >
       {categoryIcon[category.slug as keyof typeof categoryIcon]}
       <span className="text-sm font-bold">{category.name}</span>
