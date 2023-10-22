@@ -34,7 +34,7 @@ const ProductPage = async ({ params }: ProductPageProps) => {
     },
   });
 
-  /*   const relatedProducts = await db.product.findMany({
+  /*   const relatedProducts = await db.product.findMany({  //this is the old way to select related products
     where: {
       categoryId: product?.categoryId,
       NOT: {
