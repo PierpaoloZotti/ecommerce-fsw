@@ -2,7 +2,7 @@
 import { ProductWithTotalPrice } from "@/helper/product";
 import { ReactNode, createContext, useState } from "react";
 
-interface CartProduct extends ProductWithTotalPrice {
+export interface CartProduct extends ProductWithTotalPrice {
   quantity: number;
 }
 

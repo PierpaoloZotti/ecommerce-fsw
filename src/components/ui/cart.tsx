@@ -9,17 +9,19 @@ import CartItem from "./cart-item";
 const Cart = () => {
   const { products } = useContext(CartContext);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       <Badge
         variant="outline"
-        className="flex w-fit items-center gap-2 border-2 border-primary"
+        className="mb-7 flex w-fit items-center gap-2 border-2 border-primary"
       >
         <ShoppingCartIcon className="h-4 w-4" />
         <span>CART</span>
       </Badge>
 
       {products.map((product) => (
-        <h1 key={product.id}>{product.name}</h1>
+        <div key={product.id} className="mb-4 flex flex-col">
+          <CartItem product={product} />
+        </div>
       ))}
     </div>
   );
