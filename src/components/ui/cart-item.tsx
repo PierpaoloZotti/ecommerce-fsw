@@ -1,14 +1,27 @@
-import { computeProductTotalPrice } from "@/helper/product";
-import { CartProduct } from "@/providers/cart";
+"use client";
+
+import { CartContext, CartProduct } from "@/providers/cart";
 import { ChevronLeft, ChevronRight, Trash } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./button";
+import { useContext } from "react";
 
 type CartItemProps = {
   product: CartProduct;
 };
 
 const CartItem = ({ product }: CartItemProps) => {
+  const { increaseQuantity, decreaseQuantity, removeProduct } =
+    useContext(CartContext);
+  const handleIncreaseQuantity = () => {
+    increaseQuantity(product.id);
+  };
+  const handleDecreaseQuantity = () => {
+    decreaseQuantity(product.id);
+  };
+  const handleRemoveProduct = () => {
+    removeProduct(product.id);
+  };
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
@@ -33,7 +46,7 @@ const CartItem = ({ product }: CartItemProps) => {
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => {}}
+              onClick={handleDecreaseQuantity}
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -42,14 +55,19 @@ const CartItem = ({ product }: CartItemProps) => {
               variant="outline"
               size="icon"
               className="h-7 w-7"
-              onClick={() => {}}
+              onClick={handleIncreaseQuantity}
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
       </div>
-      <Button size="icon" variant="outline" className="h-8 w-8">
+      <Button
+        size="icon"
+        variant="outline"
+        className="h-8 w-8"
+        onClick={handleRemoveProduct}
+      >
         <Trash className="h-4 w-4" />
       </Button>
     </div>
