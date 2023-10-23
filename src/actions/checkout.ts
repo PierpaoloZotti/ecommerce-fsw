@@ -4,7 +4,7 @@ import { CartProduct } from "@/providers/cart";
 import Stripe from "stripe";
 
 export const createCheckout = async (products: CartProduct[]) => {
-  // CRIAR CHECKOUT
+  // CREATE CHECKOUT
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2023-10-16",
   });
@@ -30,6 +30,6 @@ export const createCheckout = async (products: CartProduct[]) => {
     }),
   });
 
-  // RETORNAR O CHECKOUT
+  // RETURN CHECKOUT
   return checkout;
 };
