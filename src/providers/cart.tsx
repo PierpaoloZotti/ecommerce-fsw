@@ -1,4 +1,5 @@
 "use client";
+
 import { ProductWithTotalPrice } from "@/helper/product";
 import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 
@@ -34,13 +35,16 @@ export const CartContext = createContext<ICartContext>({
 });
 
 const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [products, setProducts] = useState<CartProduct[]>(
-    JSON.parse(localStorage.getItem("cart") || "[]"),
-  );
+  const [products, setProducts] = useState<CartProduct[]>(() => {
+    if (typeof window === "undefined") return [];
+    const savedCart = localStorage.getItem("@cart");
+    const initialCart = savedCart ? JSON.parse(savedCart) : [];
+    return initialCart;
+  });
 
   //creating persistent cart
   useEffect(() => {
-    const cart = localStorage.setItem("cart", JSON.stringify(products));
+    const cart = localStorage.setItem("@cart", JSON.stringify(products));
   }, [products]);
 
   const addProductToCart = (product: CartProduct) => {
