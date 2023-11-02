@@ -1,17 +1,25 @@
 import { ProductWithTotalPrice } from "@/helper/product";
+import { cn } from "@/lib/utils";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 type ProductItemProps = {
   product: ProductWithTotalPrice;
+  className?: string;
+  quantity?: number;
 };
 
-const ProductItem = ({ product }: ProductItemProps) => {
+const ProductItem = ({ product, quantity, className }: ProductItemProps) => {
   return (
-    <Link href={`/product/${product.slug}`} className="cursor-pointer">
-      <div className="flex max-w-[156px] flex-col gap-4">
-        <div className="relative flex h-[170px] w-[156px] items-center rounded-xl bg-secondary">
+    <Link href={`/product/${product.slug}`} className={`cursor-pointer`}>
+      <div className={`flex max-w-[156px] flex-col gap-4`}>
+        <div
+          className={cn(
+            `relative flex h-[170px] w-[156px] items-center rounded-xl bg-secondary`,
+            className,
+          )}
+        >
           <Image
             src={product.imageUrls[0]}
             alt={product.name}
@@ -21,6 +29,11 @@ const ProductItem = ({ product }: ProductItemProps) => {
             objectFit="content"
             className="m-auto h-auto max-h-[60%] w-auto"
           />
+          {quantity && (
+            <span className="absolute bottom-1 right-2 text-sm font-semibold text-secondary-foreground">
+              x{quantity}
+            </span>
+          )}
 
           {product.discountPercentage > 0 && (
             <span className="absolute left-2.5 top-2.5 flex items-center gap-0.5 rounded-full bg-primary px-2 py-0.5 text-xs font-bold">

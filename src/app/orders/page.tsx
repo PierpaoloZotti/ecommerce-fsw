@@ -2,6 +2,9 @@ import { Separator } from "@/components/ui/separator";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
+import OrderBadge from "./components/order-badge";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 const OrderPage = async () => {
   const session = await getServerSession(authOptions);
@@ -29,29 +32,25 @@ const OrderPage = async () => {
         },
       },
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   return (
     <div>
-      OrderPage
-      {orders.map((order) => (
-        <div key={order.id}>
-          <h2>Order N° {order.id}</h2>
-          <Separator />
-          <div>
-            {order.orderProducts.map((orderProduct) => (
-              <div key={orderProduct.id}>
-                <h3>{orderProduct.product.name}</h3>
-                <p>R$ {orderProduct.product.basePrice.toFixed(2)}</p>
-                <p>Quantity: {orderProduct.quantity}</p>
-                <p>
-                  Total:{" "}
-                  {orderProduct.quantity * Number(orderProduct.basePrice)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
+      <Badge
+        variant="outline"
+        className="my-8 ml-4 border-2 border-primary py-1"
+      >
+        YOURS ORDERS
+      </Badge>
+      <div className="flex flex-col gap-6 px-4">
+        {orders.map((order) => (
+          <Link key={order.id} href={`/orders/${order.id}`}>
+            <OrderBadge key={order.id} order={order} />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
